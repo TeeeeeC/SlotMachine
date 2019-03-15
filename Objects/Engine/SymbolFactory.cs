@@ -1,7 +1,6 @@
 ﻿namespace SlotMachine.Objects.Engine
 {
     using SlotMachine.Interfaces;
-    using SlotMachine.Objects.Symbols;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -49,7 +48,7 @@
 
         private ISymbol GetSymbol(char name, decimal coefficient, int probability)
         {
-            return new AppleSymbol(name, coefficient, probability);
+            return new Symbol(name, coefficient, probability);
         }
     }
 }
