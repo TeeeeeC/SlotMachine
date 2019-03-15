@@ -14,10 +14,10 @@
 
         public SymbolFactory()
         {
-            this.AppleSymbol = this.GetApple(SYMBOL_APPLE);
-            this.BananaSymbol = this.GetBanana(SYMBOL_BANANA);
-            this.PineAppleSymbol = this.GetPineApple(SYMBOL_PINEAPPLE);
-            this.WildcardSymbol = this.GetWildcard(SYMBOL_WILDCARD);
+            this.AppleSymbol = this.GetSymbol(SYMBOL_APPLE, 0.4M, 45);
+            this.BananaSymbol = this.GetSymbol(SYMBOL_BANANA, 0.6M, 35);
+            this.PineAppleSymbol = this.GetSymbol(SYMBOL_PINEAPPLE, 0.8M, 15);
+            this.WildcardSymbol = this.GetSymbol(SYMBOL_WILDCARD, 0, 5);
             this.Symbols = new Dictionary<char, ISymbol>();
             this.Symbols.Add(SYMBOL_APPLE, this.AppleSymbol);
             this.Symbols.Add(SYMBOL_BANANA, this.BananaSymbol);
@@ -47,24 +47,9 @@
             return symbols;
         }
 
-        private ISymbol GetApple(char name)
+        private ISymbol GetSymbol(char name, decimal coefficient, int probability)
         {
-            return new AppleSymbol(name, 0.4M, 45);
-        }
-
-        private ISymbol GetBanana(char name)
-        {
-            return new BananaSymbol(name, 0.6M, 35);
-        }
-
-        private ISymbol GetPineApple(char name)
-        {
-            return new PineAppleSymbol(name, 0.8M, 15);
-        }
-
-        private ISymbol GetWildcard(char name)
-        {
-            return new WildcardSymbol(name, 0, 5);
+            return new AppleSymbol(name, coefficient, probability);
         }
     }
 }
