@@ -43,10 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IMessageReader.cs" />
+    <Compile Include="Interfaces\IMessageWriter.cs" />
     <Compile Include="Interfaces\IReport.cs" />
     <Compile Include="Interfaces\ISlotMachineEngine.cs" />
     <Compile Include="Interfaces\ISymbol.cs" />
     <Compile Include="Interfaces\ISymbolFactory.cs" />
+    <Compile Include="Objects\ConsoleMessageReader.cs" />
+    <Compile Include="Objects\ConsoleMessageWriter.cs" />
     <Compile Include="Objects\Report.cs" />
     <Compile Include="Objects\Engine\SlotMachineEngine.cs" />
     <Compile Include="Objects\Player.cs" />

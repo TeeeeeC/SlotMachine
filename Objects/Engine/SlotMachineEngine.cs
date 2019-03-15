@@ -21,13 +21,16 @@
         private static Random random = new Random();
 
         private readonly ISymbolFactory symbolFactory;
-        private List<char> symbols;
+        private readonly IMessageWriter messageWriter;
+        private readonly IMessageReader messageReader;
+
         private Player player;
 
         private SlotMachineEngine()
         {
             this.symbolFactory = new SymbolFactory();
-            this.symbols = this.symbolFactory.GetSymbols();
+            this.messageWriter = new ConsoleMessageWriter();
+            this.messageReader = new ConsoleMessageReader();
             this.player = new Player();
         }
 
@@ -52,8 +55,8 @@
             string currentLine = string.Empty;
             do
             {
-                Console.WriteLine(titleToDisplay);
-                currentLine = Console.ReadLine();
+                this.messageWriter.Write(titleToDisplay);
+                currentLine = this.messageReader.ReadLine();
                 decimal.TryParse(currentLine, out amount);
             } while (!string.IsNullOrEmpty(currentLine) && amount <= 0);
 
@@ -62,22 +65,23 @@
 
         private void Play()
         {
+            List<char> symbols = this.symbolFactory.GetSymbols();
             while (this.player.Balance > 0)
             {
                 decimal stakeAmount = this.ReadAmount(STAKE_AMOUNT_TITLE);
                 if (stakeAmount <= this.player.Balance)
                 {
-                    IReport report = this.CalculateResult(stakeAmount, this.symbols, this.player);
+                    IReport report = this.CalculateResult(stakeAmount, symbols, this.player);
                     this.PrintResult(report);
                 }
                 else
                 {
-                    Console.WriteLine(INVALID_STAKE_AMOUNT_TITLE);
+                    this.messageWriter.Write(INVALID_STAKE_AMOUNT_TITLE);
                 }
             }
 
-            Console.WriteLine(END_GAME_TITLE);
-            Console.Read();
+            this.messageWriter.Write(END_GAME_TITLE);
+            this.messageReader.ReadLine();
         }
 
         private IReport CalculateResult(decimal stakeAmount, List<char> symbols, Player player)
@@ -180,7 +184,7 @@
             output.Append(CURRENT_BALANCE_TITLE);
             output.AppendLine(report.Balance.ToString());
 
-            Console.WriteLine(output.ToString());
+            this.messageWriter.Write(output.ToString());
         }
     }
 }
